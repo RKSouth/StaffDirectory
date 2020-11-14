@@ -5,6 +5,9 @@ import Table from "./components/Table";
 // import { TodoProvider } from "./utils/GlobalState";
 import "./App.css";
 
+getEmployees();
+
+
 function App() {
   return (
     <div className="container">

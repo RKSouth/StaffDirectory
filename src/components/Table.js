@@ -1,6 +1,6 @@
 //put headings on map make the table
 import React, { Component }  from "react"
-import API from "../utils/API"
+import data from "./components/data"
 
 
 class Table extends React.Component {
