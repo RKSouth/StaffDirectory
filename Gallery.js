@@ -22,6 +22,7 @@ function Gallery() {
       setLanguage(languages[0])
       
       loadUsers(languages[0]);
+      console.log(languages[0]);
     });
   }, [])
 
