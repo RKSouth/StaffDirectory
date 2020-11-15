@@ -119,7 +119,7 @@ class Table extends React.Component {
 
 
             <tr key={id}>
-               <td><img className="img-responsive" src={image} alt="logo"/></td>
+               <td><img className="img-responsive" src={image} alt="folks"/></td>
                <td>{firstname}</td>
                <td>{lastname}</td>
                <td>{age}</td>
