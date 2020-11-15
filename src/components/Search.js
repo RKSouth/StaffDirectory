@@ -1,17 +1,17 @@
-import React from "react"
-import Data from "./Data"
+// import React from "react"
+// import Data from "./Data"
 
-function Search(props){
-    return(
-        <div>
-            <form className="form-inline">
-                <input className="form-control" type="search" onChange={event => handleSearch(event)}/>
+// function Search(props){
+//     return(
+//         <div>
+//             <form className="form-inline">
+//                 <input className="form-control" type="search" onChange={event => handleSearch(event)}/>
              
-            </form>
-        </div>
-    )
-} 
+//             </form>
+//         </div>
+//     )
+// } 
    
 
 
-export default Search
+// export default Search

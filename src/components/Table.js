@@ -1,8 +1,7 @@
 //put headings on map make the table
 import React from "react"
 import API from "../utils/API"
-import Data from "./Data"
-import autoSort from "./Autosort"
+
 
 
 //console.log(API.getEmployees());
