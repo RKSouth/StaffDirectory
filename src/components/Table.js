@@ -40,6 +40,48 @@ class Table extends React.Component {
          });
    };
 
+   headings = [
+      { name: "image", width: "10%"}, 
+      { name: "First", width: "10%"},
+      { name: "Last", width: "10%"},
+      { name: "phone", width: "20%"},
+      { name: "email", width: "20%"},
+      { name: "dob", width: "10%"}
+  ]
+
+  sorting = heading => {
+      if (this.state.order === "descend") {
+          this.setState({order: "ascend" })
+      } else {
+          this.setState({order: "descend"})}
+      const compare = (a,b) => {
+          if (this.state.order === "ascend") {
+              if (a[heading]=== undefined) {
+                  return 1
+              } else if (b[heading] === undefined) {
+                  return -1
+              } else if (heading === "name") {
+                  return a[heading].first.localeCompare(b[heading].first)
+              } else {
+                  return a[heading] -b[heading]
+              }
+          } else {
+              if (a[heading]=== undefined) {
+                  return 1
+              } else if (b[heading] === undefined) {
+                  return -1
+              } else if (heading === "name") {
+                  return b[heading].first.localeCompare(a[heading].first)
+              } else {
+                  return b[heading] -a[heading]
+              }
+          }
+      }
+      const sortedEmployees = this.state.filteredEmployees.sort( compare );
+      this.setState({
+          filteredEmployees: sortedEmployees
+      })
+  }
 
   handleSearch = event => {
       
@@ -62,6 +104,7 @@ class Table extends React.Component {
           console.log("Your Component Did mount");
           this.setState({
               employees: response.data,
+              filteredEmployees: response.data
     
           })
 
@@ -87,41 +130,58 @@ class Table extends React.Component {
          )
       })
    }
+   renderHeader() {
+      return (this.state.headings.sort((headings, index) => {
+         const { image, id, firstname, lastname, age, email } = headings
+         return(
+            <div>
+            <tr>
+              <th scope="col">{image}</th>
+                        <th scope="col">{firstname}</th>
+                        <th scope="col">{lastname}</th>
+                        <th scope="col">{age}</th>
+                        <th scope="col">{email}</th>
+                     </tr>
+               </div> 
+
+         )
+
+        
+      }))
+   }
+
 
    render() {
-      return (
+    return(
          <div>
             <form className="form-inline">
-                <input className="form-control" type="search" onChange={event => this.handleSearch(event)}/>
-                   <button onClick ={event => this.handleSearch(event)}>Search</button>
-             
+               <div className="card">
+                <input className="form-control" type="search" placeholder="search"onChange={event => this.handleSearch(event)}/>
+                   {/* <button onClick ={event => this.handleSearch(event)}>Search</button> */}
+                   </div>
             </form>
             {/* <h1 id='title'>React Dynamic Table</h1> */}
             {/* < Data /> */}
             <table id='employees' className="table">
               
                   <thead>
-                     < autoSort />
-                     {/* <tr> */}
-                     {/* <th scope="col">Photo</th>
-                        <th><button onClick={autoSort.Example()}>First
-								
-								</button></th>
-                        <th scope="col"><button onClick={this.sort}>Last
-								
-								</button></th>
-                        <th scope="col">Age</th>
-                        <th scope="col">Email</th>
-                     </tr> */}
+                     <tr>
+                  <th scope="col">image</th>
+                        <th scope="col">firstname</th>
+                        <th scope="col">lastname</th>
+                        <th scope="col">age</th>
+                        <th scope="col">email</th>
+                     </tr>
                   </thead>
 
                   <tbody>
+                
                      {/* <tr>{this.renderTableHeader()}</tr> */}
                      {this.renderTableData()}
                   </tbody>
                </table>
          </div>
-      )
+    )
    }
 }
 

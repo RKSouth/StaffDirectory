@@ -1,10 +1,15 @@
 import React from "react"
+import "../index.css"
 
 function Nav () {
     return (
-        <div>
-            <strong><span><h1>Staff Directory</h1></span></strong>
-        </div>
+        <div className="jumbotron jumbotron-fluid">
+  <div className="container">
+    <h1 className="display-4">Staff Directory</h1>
+    <p className="lead">Begin Typing to Look up Staff</p>
+  </div>
+</div>
+      
     )
 }
 
