@@ -91,10 +91,12 @@ class Table extends React.Component {
       
       //gets the actual value out of the search box
       const searchValue = event.target.value
-      const filteredEmp = this.state.employeestemp.filter(function(item){
-         const uppercase = item.name.toUpperCase()
-         return uppercase.includes(searchValue)
-       })
+      const filteredEmp = this.state.employees.filter(folks => {
+          //need to merge the data together to see if user input is anywhere inside
+          let values = Object.values(folks).join("").toLowerCase()
+          console.log(values);
+          return values.indexOf(searchValue.toLowerCase())!== -1
+      } )
       this.setState({
           filteredEmployees: filteredEmp
       })
@@ -137,6 +139,7 @@ class Table extends React.Component {
          <div>
             <form className="form-inline">
                 <input className="form-control" type="search" onChange={event => this.handleSearch(event)}/>
+                   <button onClick ={event => this.handleSearch(event)}>Search</button>
              
             </form>
             {/* <h1 id='title'>React Dynamic Table</h1> */}
@@ -145,8 +148,10 @@ class Table extends React.Component {
               
                   <thead>
                      <tr>
-                       <th scope="col">Photo</th>
-                        <th scope="col">First</th>
+                     <th scope="col">Photo</th>
+                        <th  onClick={() => {
+              this.sort("First");
+            }} scope="col">First</th>
                         <th scope="col">Last</th>
                         <th scope="col">Age</th>
                         <th scope="col">Email</th>
