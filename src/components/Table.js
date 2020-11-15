@@ -45,47 +45,47 @@ class Table extends React.Component {
    //    })
    // }
 
-   headings = [
-      { name: "image", width: "10%"}, 
-      { name: "name", width: "10%"},
-      { name: "phone", width: "20%"},
-      { name: "email", width: "20%"},
-      { name: "dob", width: "10%"}
-  ]
+//    headings = [
+//       { name: "image", width: "10%"}, 
+//       { name: "name", width: "10%"},
+//       { name: "phone", width: "20%"},
+//       { name: "email", width: "20%"},
+//       { name: "dob", width: "10%"}
+//   ]
 
-  sort = heading => {
-      if (this.state.order === "descend") {
-          this.setState({order: "ascend" })
-      } else {
-          this.setState({order: "descend"})}
-      const compare = (a,b) => {
-          if (this.state.order === "ascend") {
-              if (a[heading]=== undefined) {
-                  return 1
-              } else if (b[heading] === undefined) {
-                  return -1
-              } else if (heading === "name") {
-                  return a[heading].first.localeCompare(b[heading].first)
-              } else {
-                  return a[heading] -b[heading]
-              }
-          } else {
-              if (a[heading]=== undefined) {
-                  return 1
-              } else if (b[heading] === undefined) {
-                  return -1
-              } else if (heading === "name") {
-                  return b[heading].first.localeCompare(a[heading].first)
-              } else {
-                  return b[heading] -a[heading]
-              }
-          }
-      }
-      const sortedEmployees = this.state.filteredEmployees.sort( compare );
-      this.setState({
-          filteredEmployees: sortedEmployees
-      })
-  }
+//   sort = heading => {
+//       if (this.state.order === "descend") {
+//           this.setState({order: "ascend" })
+//       } else {
+//           this.setState({order: "descend"})}
+//       const compare = (a,b) => {
+//           if (this.state.order === "ascend") {
+//               if (a[heading]=== undefined) {
+//                   return 1
+//               } else if (b[heading] === undefined) {
+//                   return -1
+//               } else if (heading === "name") {
+//                   return a[heading].first.localeCompare(b[heading].first)
+//               } else {
+//                   return a[heading] -b[heading]
+//               }
+//           } else {
+//               if (a[heading]=== undefined) {
+//                   return 1
+//               } else if (b[heading] === undefined) {
+//                   return -1
+//               } else if (heading === "name") {
+//                   return b[heading].first.localeCompare(a[heading].first)
+//               } else {
+//                   return b[heading] -a[heading]
+//               }
+//           }
+//       }
+//       const sortedEmployees = this.state.filteredEmployees.sort( compare );
+//       this.setState({
+//           filteredEmployees: sortedEmployees
+//       })
+//   }
 
   handleSearch = event => {
       
@@ -108,7 +108,7 @@ class Table extends React.Component {
           console.log("Your Component Did mount");
           this.setState({
               employees: response.data,
-              filteredEmployees: response.data
+    
           })
 
       })
@@ -149,10 +149,12 @@ class Table extends React.Component {
                   <thead>
                      <tr>
                      <th scope="col">Photo</th>
-                        <th  onClick={() => {
-              this.sort("First");
-            }} scope="col">First</th>
-                        <th scope="col">Last</th>
+                        <th><button onClick={this.sort}>First
+								
+								</button></th>
+                        <th scope="col"><button onClick={this.sort}>First
+								
+								</button></th>
                         <th scope="col">Age</th>
                         <th scope="col">Email</th>
                      </tr>
