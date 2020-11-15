@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import ReactDataGrid from "react-data-grid";
-import "./styles.css";
+
  function autoSort(){
 const defaultColumnProperties = {
   sortable: true,

@@ -2,6 +2,8 @@
 import React from "react"
 import API from "../utils/API"
 import Data from "./Data"
+import autoSort from "./Autosort"
+
 
 //console.log(API.getEmployees());
 
@@ -38,54 +40,6 @@ class Table extends React.Component {
          });
    };
 
-   //  renderTableHeader() {
-   //     let header = Object.keys(this.state.employees[0])
-   //      header.map((key, index) => {
-   //       return <th key={index}>{key.toUpperCase()}</th>
-   //    })
-   // }
-
-//    headings = [
-//       { name: "image", width: "10%"}, 
-//       { name: "name", width: "10%"},
-//       { name: "phone", width: "20%"},
-//       { name: "email", width: "20%"},
-//       { name: "dob", width: "10%"}
-//   ]
-
-//   sort = heading => {
-//       if (this.state.order === "descend") {
-//           this.setState({order: "ascend" })
-//       } else {
-//           this.setState({order: "descend"})}
-//       const compare = (a,b) => {
-//           if (this.state.order === "ascend") {
-//               if (a[heading]=== undefined) {
-//                   return 1
-//               } else if (b[heading] === undefined) {
-//                   return -1
-//               } else if (heading === "name") {
-//                   return a[heading].first.localeCompare(b[heading].first)
-//               } else {
-//                   return a[heading] -b[heading]
-//               }
-//           } else {
-//               if (a[heading]=== undefined) {
-//                   return 1
-//               } else if (b[heading] === undefined) {
-//                   return -1
-//               } else if (heading === "name") {
-//                   return b[heading].first.localeCompare(a[heading].first)
-//               } else {
-//                   return b[heading] -a[heading]
-//               }
-//           }
-//       }
-//       const sortedEmployees = this.state.filteredEmployees.sort( compare );
-//       this.setState({
-//           filteredEmployees: sortedEmployees
-//       })
-//   }
 
   handleSearch = event => {
       
@@ -116,8 +70,8 @@ class Table extends React.Component {
 
 
    renderTableData() {
-      return this.state.employees.map((employees, index) => {
-         const { image, id, firstname, lastname, age, email } = employees //destructuring
+      return this.state.filteredEmployees.map((filteredEmployees, index) => {
+         const { image, id, firstname, lastname, age, email } = filteredEmployees //destructuring
          return (
 
 
@@ -147,17 +101,18 @@ class Table extends React.Component {
             <table id='employees' className="table">
               
                   <thead>
-                     <tr>
-                     <th scope="col">Photo</th>
-                        <th><button onClick={this.sort}>First
+                     < autoSort />
+                     {/* <tr> */}
+                     {/* <th scope="col">Photo</th>
+                        <th><button onClick={autoSort.Example()}>First
 								
 								</button></th>
-                        <th scope="col"><button onClick={this.sort}>First
+                        <th scope="col"><button onClick={this.sort}>Last
 								
 								</button></th>
                         <th scope="col">Age</th>
                         <th scope="col">Email</th>
-                     </tr>
+                     </tr> */}
                   </thead>
 
                   <tbody>
@@ -174,24 +129,3 @@ export default Table
 
 
 
-
-// ORIGINAL CODE -- DELETE EVERYTHING ABOVE
-// function Table () {
-//     return (
-//         <div>
-//         <h4>Employees:</h4>
-//         <ul className="list-group">
-
-
-//           {/* {state.map((item, index) => (
-//             <li className="list-group-item col-12" key={item.id}>
-//               {index}:<span className={item.priority ? "font-weight-bold" : ""}> {item.name}</span>
-//             </li>
-//           ))} */}
-//         </ul>
-//       </div>
-
-//     )
-// }
-
-// export default Table
