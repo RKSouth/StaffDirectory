@@ -3,7 +3,7 @@ import React from "react"
 function Nav () {
     return (
         <div>
-            <strong><span>Staff Directory</span></strong>
+            <strong><span><h1>Staff Directory</h1></span></strong>
         </div>
     )
 }

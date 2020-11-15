@@ -2,16 +2,51 @@ import React, { Component } from "react"
 import API from "../utils/API"
 import Search from "./Search"
 
-API.getEmployees();
+ 
 
-export default class Data extends Component {
-    state = {
-        employees: [{}],
-        order: "descend",
-        filteredEmployees: [{}],
-    }
-    
+console.log(API.getEmployees());
 
+class Data extends Component {
+     // state = {
+    //     employees: [{Table.employees}],
+    //     // order: "descend",
+    //     // filteredEmployees: [{}],
+    //     // employees: employees
+    // }
+    constructor(props) {
+        super(props)
+        this.state = {
+           employees: [],
+           order: "descend",
+           filteredEmployees: [{}]
+        };
+     }
+     componentDidMount = () => {
+        console.log(API.getEmployees())
+        API.getEmployees()
+           .then((records) => {
+              const empdata = records.results;
+              const employeestemp = [];
+              console.log(empdata)
+              for (let i = 0; i < empdata.length; i++) {
+                 let erecord = {
+                    id: i + 1,
+                    firstname: empdata[i].name.first,
+                    lastname: empdata[i].name.last,
+                    email: empdata[i].email,
+                    image: empdata[i].picture.medium,
+                    phone: empdata[i].cell,
+                    age: empdata[i].dob.age,
+                 };
+                 employeestemp.push(erecord);
+              }
+              this.setState({ employees: employeestemp });
+              console.log(this.state.employees);
+           });
+           console.log(API.getEmployees())
+     };
+   
+  
     headings = [
         { name: "image", width: "10%"}, 
         { name: "name", width: "10%"},
@@ -55,11 +90,13 @@ export default class Data extends Component {
     }
 
     handleSearch = event => {
+        
         //gets the actual value out of the search box
         const searchValue = event.target.value
-        const filteredEmp = this.state.employees.filter(folks => {
+        const filteredEmp = this.state.employeestemp.filter(folks => {
             //need to merge the data together to see if user input is anywhere inside
             let values = Object.values(folks).join("").toLowerCase()
+            console.log(values);
             return values.indexOf(searchValue.toLowerCase())!== -1
         } )
         this.setState({
@@ -68,11 +105,12 @@ export default class Data extends Component {
 
     }
 
-    componentDidMount(){
+    componentDidMount({employees, filteredEmployees}){
         API.getEmployees().then(response => {
+            console.log("Your Component Did mount");
             this.setState({
-                employees: response.data.results,
-                filteredEmployees: response.data.results
+                employees: response.data,
+                filteredEmployees: response.data
             })
 
         })
@@ -82,6 +120,8 @@ export default class Data extends Component {
         return (
         <div>
             <Search handleSearch={this.handleSearch}/>
+            <button onClick ={event => this.handleSearch(event)}>Search</button>
         </div>)
     }
 }
+export default Data

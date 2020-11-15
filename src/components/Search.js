@@ -1,16 +1,17 @@
 import React from "react"
+import Data from "./Data"
 
-function search({
-    handleSearch
-}) {
+function Search(props){
     return(
         <div>
             <form className="form-inline">
                 <input className="form-control" type="search" onChange={event => handleSearch(event)}/>
-                <button onClick ={event => handleSearch(event)}>Search</button>
+             
             </form>
         </div>
     )
-}
+} 
+   
 
-export default search
+
+export default Search
