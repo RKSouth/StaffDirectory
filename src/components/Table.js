@@ -1,31 +1,50 @@
 //put headings on map make the table
 import React, { Component }  from "react"
-import data from "./components/data"
+import API from "../utils/API"
+import Data from "./Data"
 
+//console.log(API.getEmployees());
 
 class Table extends React.Component {
-    constructor(props) {
-       super(props)
-       this.state = {
-          students: [
-             { id: 1, name: 'Wasif', age: 21, email: 'wasif@email.com' },
-             { id: 2, name: 'Ali', age: 19, email: 'ali@email.com' },
-             { id: 3, name: 'Saad', age: 16, email: 'saad@email.com' },
-             { id: 4, name: 'Asad', age: 25, email: 'asad@email.com' }
-          ]
-       }
-    }
+   constructor(props) {
+      super(props)
+      this.state = {
+         employees: [],
+         };
+   }
+      componentDidMount = () => {
+         console.log(API.getEmployees())
+         API.getEmployees()
+          .then((records) => {
+            const empdata = records.results;
+            const employeestemp = [];
+            console.log(empdata)
+            for (let i = 0; i < empdata.length; i++) {
+              let erecord = {
+                id: i+1,
+                name: empdata[i].name.first + " " + empdata[i].name.last,
+                email: empdata[i].email,
+                image: empdata[i].picture.medium,
+                phone: empdata[i].cell,
+                age: empdata[i].dob.age,
+              };
+              employeestemp.push(erecord);
+            }
+            this.setState({ employees: employeestemp });
+            console.log(this.state.employees);
+          });
+      };
  
-    renderTableHeader() {
-       let header = Object.keys(this.state.students[0])
-       return header.map((key, index) => {
-          return <th key={index}>{key}</th>
-       })
-    }
+   //  renderTableHeader() {
+   //     let header = Object.keys(this.state.employees[0])
+   //      header.map((key, index) => {
+   //       return <th key={index}>{key.toUpperCase()}</th>
+   //    })
+   // }
  
     renderTableData() {
-       return this.state.students.map((student, index) => {
-          const { id, name, age, email } = student //destructuring
+       return this.state.employees.map((employees, index) => {
+          const { id, name, age, email } = employees //destructuring
           return (
              <tr key={id}>
                 <td>{id}</td>
@@ -41,9 +60,10 @@ class Table extends React.Component {
        return (
           <div>
              <h1 id='title'>React Dynamic Table</h1>
-             <table id='students'>
+             {/* < Data /> */}
+             <table id='employees'>
                 <tbody>
-                   <tr>{this.renderTableHeader()}</tr>
+                  {/* <tr>{this.renderTableHeader()}</tr> */}
                    {this.renderTableData()}
                 </tbody>
              </table>
@@ -53,7 +73,11 @@ class Table extends React.Component {
  }
  
 export default Table
- // ORIGINAL CODE -- DELETE EVERYTHING ABOVE
+
+
+
+
+// ORIGINAL CODE -- DELETE EVERYTHING ABOVE
 // function Table () {
 //     return (
 //         <div>

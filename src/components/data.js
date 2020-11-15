@@ -2,12 +2,15 @@ import React, { Component } from "react"
 import API from "../utils/API"
 import Search from "./Search"
 
+API.getEmployees();
+
 export default class Data extends Component {
     state = {
         employees: [{}],
         order: "descend",
         filteredEmployees: [{}],
     }
+    
 
     headings = [
         { name: "image", width: "10%"}, 
