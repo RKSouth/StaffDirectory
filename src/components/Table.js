@@ -15,11 +15,21 @@ class Table extends React.Component {
         filteredEmployees: [{}],
       };
    }
+
+//    componentDidMount = () => { API.getEmployees().then(res => { this.setState({ employees: res.data }) }) }
+
    componentDidMount = () => {
-      console.log(API.getEmployees())
-      API.getEmployees()
-         .then((records) => {
-            const empdata = records.results;
+    API.getEmployees().then(response => {
+        console.log("Your Component Did mount");
+        this.setState({ employees: response.data
+        });
+        this.sanitizeEmployees();
+
+    })
+}
+ sanitizeEmployees (records){
+             console.log(this.state.employees.results)
+            const empdata = this.state.employees.results;
             const employeestemp = [];
             console.log(empdata)
             for (let i = 0; i < empdata.length; i++) {
@@ -36,7 +46,7 @@ class Table extends React.Component {
             }
             this.setState({ employees: employeestemp });
             console.log(this.state.employees);
-         });
+       
    };
 
    headings = [
@@ -98,17 +108,7 @@ class Table extends React.Component {
 
   }
 
-  componentDidMount({employees, filteredEmployees}){
-      API.getEmployees().then(response => {
-          console.log("Your Component Did mount");
-          this.setState({
-              employees: response.data,
-              filteredEmployees: response.data
-    
-          })
-
-      })
-  }
+ 
 
 
    renderTableData() {
@@ -131,7 +131,7 @@ class Table extends React.Component {
    }
    renderHeader() {
       return (this.state.headings.sort((headings, index) => {
-         const { image, id, firstname, lastname, age, email } = headings
+         const { image, firstname, lastname, age, email } = headings
          return(
             <div>
             <tr>
