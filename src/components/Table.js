@@ -11,8 +11,9 @@ class Table extends React.Component {
       super(props)
       this.state = {
          employees: [],
-         order: "descend",
-        filteredEmployees: [{}],
+         order: "ascend",
+         sorted: false,
+        filteredEmployees: [{}]
       };
    }
 
@@ -27,7 +28,7 @@ class Table extends React.Component {
 
     })
 }
- sanitizeEmployees (records){
+ sanitizeEmployees (){
              console.log(this.state.employees.results)
             const empdata = this.state.employees.results;
             const employeestemp = [];
@@ -51,45 +52,68 @@ class Table extends React.Component {
 
    headings = [
       { name: "image", width: "10%"}, 
-      { name: "First", width: "10%"},
-      { name: "Last", width: "10%"},
-      { name: "phone", width: "20%"},
-      { name: "email", width: "20%"},
-      { name: "dob", width: "10%"}
+      { name: "first", width: "10%"},
+      { name: "last", width: "10%"},
+      { name: "dob", width: "10%"},
+      { name: "email", width: "20%"}
+      
   ]
+  
+  handleToggle = event => {
+    if (this.state.order === "descend") {
+        this.setState({order : "ascend"})
+    } else {
+        this.setState({order : "descend"})
+    }
+    this.setState({sorted: !this.state.sorted})
+    this.sorting(event.target.parentElement.outerText)
+  }
+  
+ 
 
-  sorting = heading => {
-      if (this.state.order === "descend") {
-          this.setState({order: "ascend" })
-      } else {
-          this.setState({order: "descend"})}
-      const compare = (a,b) => {
-          if (this.state.order === "ascend") {
-              if (a[heading]=== undefined) {
-                  return 1
-              } else if (b[heading] === undefined) {
-                  return -1
-              } else if (heading === "name") {
-                  return a[heading].first.localeCompare(b[heading].first)
-              } else {
-                  return a[heading] -b[heading]
-              }
-          } else {
-              if (a[heading]=== undefined) {
-                  return 1
-              } else if (b[heading] === undefined) {
-                  return -1
-              } else if (heading === "name") {
-                  return b[heading].first.localeCompare(a[heading].first)
-              } else {
-                  return b[heading] -a[heading]
-              }
-          }
-      }
-      const sortedEmployees = this.state.filteredEmployees.sort( compare );
-      this.setState({
-          filteredEmployees: sortedEmployees
-      })
+  sorting(sortcol){
+    //   if (this.state.order === "descend") {
+    //       this.setState({order: "ascend" })
+    //   } else {
+    //       this.setState({order: "descend"})}
+    //   const compare = (a,b) => {
+    //       if (this.state.order === "ascend") {
+    //           if (a[heading]=== undefined) {
+    //               return 1
+    //           } else if (b[heading] === undefined) {
+    //               return -1
+    //           } else if (heading === "name") {
+    //               return a[heading].first.localeCompare(b[heading].first)
+    //           } else {
+    //               return a[heading] -b[heading]
+    //           }
+    //       } else {
+    //           if (a[heading]=== undefined) {
+    //               return 1
+    //           } else if (b[heading] === undefined) {
+    //               return -1
+    //           } else if (heading === "name") {
+    //               return b[heading].first.localeCompare(a[heading].first)
+    //           } else {
+    //               return b[heading] -a[heading]
+    //           }
+    //       }
+    //   }
+    //   const sortedEmployees = this.state.filteredEmployees.sort( compare );
+    console.log("I'm sorting")
+    console.log(this.state.order)
+    // console.log(sortcol)
+    if (this.state.order === "ascend") {
+    this.setState({filteredEmployees: this.state.filteredEmployees.sort(function(a, b) {
+        return a.sortcol - b.sortcol
+        }), order: "descend"
+    });
+    } else if (this.state.order === "descend") {
+    this.setState({filteredEmployees: this.state.filteredEmployees.sort(function(a, b) {
+        return b.sortcol - a.sortcol
+        }), order: "ascend"
+    });
+    }
   }
 
   handleSearch = event => {
@@ -108,7 +132,6 @@ class Table extends React.Component {
 
   }
 
- 
 
 
    renderTableData() {
@@ -129,23 +152,22 @@ class Table extends React.Component {
          )
       })
    }
+
    renderHeader() {
-      return (this.state.headings.sort((headings, index) => {
-         const { image, firstname, lastname, age, email } = headings
-         return(
-            <div>
-            <tr>
-              <th scope="col">{image}</th>
-                        <th scope="col">{firstname}</th>
-                        <th scope="col">{lastname}</th>
-                        <th scope="col">{age}</th>
-                        <th scope="col">{email}</th>
-                     </tr>
-               </div> 
-
-         )
-
-        
+    
+      return (this.headings.map((headings, index) => {
+         const { name, width } = headings
+         return(   
+              <th scope="col">{name}
+                <input
+                // checked={this.state.sorted}
+                onChange={this.handleToggle}
+                className="react-switch-checkbox"
+                id={`react-switch-new`}
+                type="checkbox"
+                />
+              </th>
+         )        
       }))
    }
 
@@ -164,13 +186,9 @@ class Table extends React.Component {
             <table id='employees' className="table">
               
                   <thead>
-                     <tr>
-                  <th scope="col">image</th>
-                        <th scope="col">firstname</th>
-                        <th scope="col">lastname</th>
-                        <th scope="col">age</th>
-                        <th scope="col">email</th>
-                     </tr>
+                  <tr>
+                    {this.renderHeader()}
+                  </tr>
                   </thead>
 
                   <tbody>
