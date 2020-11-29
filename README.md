@@ -20,7 +20,7 @@
 
 
 ## Deployed Site
-[ClickClick!]( https://rksouth.github.io/Clicker-Game/)
+[ClickClick!](https://desolate-dusk-46546.herokuapp.com/)
 
 ## Features 
 
@@ -45,7 +45,7 @@ To be called as part of the JSX.
 
 __3. To Be Added Later: A sortable Table__
 
-I was unable to sort my search by ascending/descending or alphabetical order. To be frank, I did a lot of research and found myself unable to commit to one way of doing it. But let me run down the top options:
+I was unable to sort my search by ascending/descending or alphabetical order. I was able to get my project to sort by age though. To be frank, I did a lot of research and found myself unable to commit to one way of doing it. But let me run down the top options:
 
 1. I found a great article on column sorting, [Link](https://adazzle.github.io/react-data-grid/docs/examples/column-sorting) which seems to take the work out of it for you. It has a long column and basically shows how to feed the data in and get every single column to sort at the same time. Seems like a no-brainer but, I got a little stuck on how to make the classes/functions work together (as classes are my biggest nemesis in coding). I tried 3 ways different and swiftly went back to original code.
 
