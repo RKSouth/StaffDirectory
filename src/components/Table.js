@@ -54,68 +54,50 @@ class Table extends React.Component {
       { name: "image", width: "10%"}, 
       { name: "first", width: "10%"},
       { name: "last", width: "10%"},
-      { name: "dob", width: "10%"},
+      { name: "age", width: "10%"},
       { name: "email", width: "20%"}
       
   ]
+   alphaArray = ["a", "b"]
   
-  handleToggle = event => {
-    if (this.state.order === "descend") {
-        this.setState({order : "ascend"})
-    } else {
-        this.setState({order : "descend"})
+ sorting = heading => {
+   
+        if (this.state.order === "descend") {
+            this.setState({order: "ascend" })
+        } else {
+            this.setState({order: "descend"})}
+        const compare = (a,b) => {
+         console.log(a[heading])
+            if (this.state.order === "ascend") {
+                if (a[heading]=== undefined) {
+                    return 1
+                } else if (b[heading] === undefined) {
+                    return -1
+                } else if (heading === "first") {
+                   console.log(a[heading].first)
+                    return a[heading].first.localeCompare(b[heading].first)
+                } else {
+                   console.log("age")
+                    return a[heading] -b[heading]
+                }
+            } else {
+                if (a[heading]=== undefined) {
+                    return 1
+                } else if (b[heading] === undefined) {
+                    return -1
+                } else if (heading === "first") {
+                    return b[heading].first.localeCompare(a[heading].first)
+                } else {
+                   //this returns age
+                    return b[heading] -a[heading]
+                }
+            }
+        }
+        const sortedEmployees = this.state.filteredEmployees.sort( compare );
+        this.setState({filteredEmployees: sortedEmployees})
+          
     }
-    this.setState({sorted: !this.state.sorted})
-    this.sorting(event.target.parentElement.outerText)
-  }
   
- 
-
-  sorting(sortcol){
-    //   if (this.state.order === "descend") {
-    //       this.setState({order: "ascend" })
-    //   } else {
-    //       this.setState({order: "descend"})}
-    //   const compare = (a,b) => {
-    //       if (this.state.order === "ascend") {
-    //           if (a[heading]=== undefined) {
-    //               return 1
-    //           } else if (b[heading] === undefined) {
-    //               return -1
-    //           } else if (heading === "name") {
-    //               return a[heading].first.localeCompare(b[heading].first)
-    //           } else {
-    //               return a[heading] -b[heading]
-    //           }
-    //       } else {
-    //           if (a[heading]=== undefined) {
-    //               return 1
-    //           } else if (b[heading] === undefined) {
-    //               return -1
-    //           } else if (heading === "name") {
-    //               return b[heading].first.localeCompare(a[heading].first)
-    //           } else {
-    //               return b[heading] -a[heading]
-    //           }
-    //       }
-    //   }
-    //   const sortedEmployees = this.state.filteredEmployees.sort( compare );
-    console.log("I'm sorting")
-    console.log(this.state.order)
-    // console.log(sortcol)
-    if (this.state.order === "ascend") {
-    this.setState({filteredEmployees: this.state.filteredEmployees.sort(function(a, b) {
-        return a.sortcol - b.sortcol
-        }), order: "descend"
-    });
-    } else if (this.state.order === "descend") {
-    this.setState({filteredEmployees: this.state.filteredEmployees.sort(function(a, b) {
-        return b.sortcol - a.sortcol
-        }), order: "ascend"
-    });
-    }
-  }
-
   handleSearch = event => {
       
       //gets the actual value out of the search box
@@ -123,7 +105,7 @@ class Table extends React.Component {
       const filteredEmp = this.state.employees.filter(folks => {
           //need to merge the data together to see if user input is anywhere inside
           let values = Object.values(folks).join("").toLowerCase()
-          console.log(values);
+        //   console.log(values);
           return values.indexOf(searchValue.toLowerCase())!== -1
       } )
       this.setState({
@@ -155,17 +137,20 @@ class Table extends React.Component {
 
    renderHeader() {
     
-      return (this.headings.map((headings, index) => {
-         const { name, width } = headings
+      return (this.headings.map((heading, index) => {
+         const { name, width } = heading
+         console.log(name);
          return(   
-              <th scope="col">{name}
-                <input
+              <th scope="col"
+              
                 // checked={this.state.sorted}
-                onChange={this.handleToggle}
+                onClick={() => {this.sorting(name.toLowerCase())}}
                 className="react-switch-checkbox"
                 id={`react-switch-new`}
-                type="checkbox"
-                />
+                
+               >
+                  {name}
+                  <span> click HERE</span>
               </th>
          )        
       }))
