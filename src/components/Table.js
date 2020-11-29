@@ -150,7 +150,7 @@ class Table extends React.Component {
                 
                >
                   {name}
-                  <span> click HERE</span>
+                  <span> (sort)</span>
               </th>
          )        
       }))
